@@ -23,4 +23,4 @@ packages = ["lena_sauce"]
 include-package-data = true
 
 [tool.setuptools.package-data]
-"lena_sauce" = ["NaI-Map.csv", "Scint-Map.csv"]
+"lena_sauce" = ["NaI-Map.csv", "Scint-Map.csv", "mdpp-setup.toml"]
