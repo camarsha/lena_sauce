@@ -30,3 +30,25 @@ def load_midas_run(filename, mdpp_setup=mdpp_setup, chunk_size=1000000):
             ]
         )
     return sauce.Run(str(dir / parquet_file))
+
+
+def load_scalers(filename_or_run):
+    if isinstance(filename_or_run, sauce.Run):
+        filename = Path(filename_or_run.filename)
+    else:
+        filename = Path(filename_or_run)
+    dir = filename.parent
+    base_name = filename.stem.split(".")[0]
+    scaler_name = base_name + "_scaler.csv"
+
+    return sauce.Scalers(str(dir / scaler_name))
+
+
+def get_bci(filename_or_run):
+    s = load_scalers(filename_or_run)
+    return s.sum(0)
+
+
+def get_pulser_counts(filename_or_run):
+    s = load_scalers(filename_or_run)
+    return s.sum(1)
