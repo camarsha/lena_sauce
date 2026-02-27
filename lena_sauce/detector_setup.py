@@ -66,7 +66,9 @@ def make_muon_veto(
 
     for row in tqdm(map_df.iter_rows(named=True)):
         temp = sauce.Detector(row["name"])
-        temp.find_hits(run_data, module=int(row["module"]), channel=int(row["channel"]))
+        temp.find_hits(
+            run_data, module=int(row["module"]), channel=int(row["channel"])
+        )
         num = int(re.split("(\\d+)", temp.name)[1])
         temp.tag(num, tag_name="PS_segment")
 
@@ -97,7 +99,9 @@ def make_hpge(
 
     for row in tqdm(map_df.iter_rows(named=True)):
         temp = sauce.Detector(row["name"])
-        temp.find_hits(run_data, module=int(row["module"]), channel=int(row["channel"]))
+        temp.find_hits(
+            run_data, module=int(row["module"]), channel=int(row["channel"])
+        )
         det_dic[temp.name] = temp
 
     return det_dic
@@ -153,3 +157,15 @@ def make_all_detectors(run_data):
         beam = dets["beam"]
         caller_globals["beam"] = beam
     return hpge, hpge_t, pulser, beam, nai, scint
+
+
+def make_trapezoid_gate(
+    hpge_col, nai_col, threshold, lower_energy, upper_energy
+):
+    points = [
+        (lower_energy, threshold),
+        (upper_energy, threshold),
+        (threshold, upper_energy),
+        (threshold, lower_energy),
+    ]
+    return sauce.Gate2D(hpge_col, nai_col, points)
