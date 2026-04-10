@@ -157,3 +157,35 @@ def calibrate_annulus_from_peaks(
         if p_dic[key]:
             a, b = energy_cal(p_dic[key])
             det_dic[key]["energy"] = a * det_dic[key][cols[key]] + b
+
+
+def plot_with_channel_and_energy(
+    x_channel,
+    y,
+    a,
+    b,
+    energy_label="Energy (keV)",
+    channel_label="Channel #",
+    y_label="Count/bin",
+):
+    """Plot data with energy on bottom and raw x on top."""
+    # Calculate energy from raw x: E = a*x + b
+
+    fig, ax = plt.subplots()
+    ax.plot(x_channel, y)  # Plot against energy
+
+    # Set bottom axis (channel) labels
+    ax.set_xlabel(channel_label)
+    ax.set_ylabel(y_label)
+
+    # Create top axis showing raw x values
+    ax_top = ax.secondary_xaxis(
+        "top",
+        functions=(
+            lambda x: a * x + b,
+            lambda e: (e - b) / a,
+        ),
+    )
+    ax_top.set_xlabel(energy_label)
+
+    return ax
