@@ -7,6 +7,7 @@ the NaI annulus.
 
 from dataclasses import dataclass
 from math import ceil, floor
+import matplotlib.pyplot as plt
 from typing import Iterable, Sequence
 import sauce
 import numpy as np
