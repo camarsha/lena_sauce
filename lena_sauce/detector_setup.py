@@ -17,7 +17,7 @@ hpge_df = pl.read_csv(hpge_map)
 
 def make_annulus(
     run_data,
-    map_df=nai_df,
+    map_df=None,
     union=False,
 ):
     """Create the annulus detector using the map file.
@@ -26,6 +26,9 @@ def make_annulus(
     :returns:
 
     """
+
+    if map_df is None:
+        map_df = nai_df
 
     det_list = []
 
@@ -51,7 +54,7 @@ def make_annulus(
 
 def make_muon_veto(
     run_data,
-    map_df=scint_df,
+    map_df=None,
     muon_thresholds=None,
     union=False,
 ):
@@ -61,6 +64,8 @@ def make_muon_veto(
     :returns:
 
     """
+    if map_df is None:
+        map_df = scint_df
 
     det_list = []
 
@@ -86,7 +91,7 @@ def make_muon_veto(
 
 def make_hpge(
     run_data,
-    map_df=hpge_df,
+    map_df=None,
 ):
     """This function picks up the rest of the detectors present in the system.
 
@@ -94,6 +99,8 @@ def make_hpge(
     :param map_df: Polars DataFrame
     :returns: Dictionary of Detector objects.
     """
+    if map_df is None:
+        map_df = hpge_df
 
     det_dic = {}
 
